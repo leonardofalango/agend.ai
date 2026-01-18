@@ -30,7 +30,10 @@ async def read_google_sheet(spreadsheet_id: str, range_name: str = "A:B"):
         sheet = service.spreadsheets()
         result = (
             sheet.values()
-            .get(spreadsheet_id=spreadsheet_id, range=range_name)
+            .get(
+                spreadsheetId=spreadsheet_id,
+                range=range_name,
+            )
             .execute()
         )
         values = result.get("values", [])
@@ -63,7 +66,7 @@ async def format_sheets_llm(rows: list):
         context_data += f"{i + 1}. Time: {horario} - Status: {status}\n"
 
     context_data += "\nPlease use this information to assist with scheduling. Only suggest available time slots."
-
+    logger.debug(f"Formatted for llm {context_data}")
     return context_data
 
 

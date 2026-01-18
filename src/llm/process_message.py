@@ -19,9 +19,18 @@ async def process_ai_message(
     model = get_model()
     chat = model.start_chat(history=chat_history or [])
 
+    spreadsheet_id = company.get("spreadsheet_id")
+    range_name = company.get("range_name", None)
+    rows = await google_sheets_agent.read_google_sheet(
+        spreadsheet_id=spreadsheet_id,
+    )
+    availability_context = await google_sheets_agent.format_sheets_llm(rows)
+
     try:
         full_user_input = (
-            f"Instrução de Contexto: {prompt_base}\n\nCliente diz: {user_message}"
+            f"Context: {prompt_base}\n\n"
+            f"Availible datetimes for appointments: {availability_context}\n\n"
+            f"User message: {user_message}\n\n"
         )
 
         response = chat.send_message(full_user_input)

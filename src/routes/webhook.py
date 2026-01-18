@@ -49,7 +49,7 @@ async def handle_message(request: Request):
                 output_tokens=len(ai_response.split()),
             )
 
-            send_whatsapp_message(
+            await send_whatsapp_message(
                 to_number=whatsapp_uid, message=ai_response, phone_id=phone_id
             )
 

@@ -13,7 +13,7 @@ tools = [
                         },
                         "row_index": {
                             "type": "integer",
-                            "description": "The row index in the Google Sheet that corresponds to the time slot to be booked.",
+                            "description": "The row index in the Google Sheet that corresponds to the time slot to be booked. Starts with 1 for the first row.",
                         },
                         "client_name": {
                             "type": "string",
